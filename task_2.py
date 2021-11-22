@@ -41,7 +41,7 @@ a9y = (0, 0, 1, 1, 2, 2, 1)
 ax = [a0x, a1x, a2x, a3x, a4x, a5x, a6x, a7x, a8x, a9x]
 ay = [a0y, a1y, a2y, a3y, a4y, a5y, a6y, a7y, a8y, a9y]
 
-strx = '29041989'
+strx = '0123456789'
 x = int(strx)
 k = 0
 for i in range(len(strx)):
