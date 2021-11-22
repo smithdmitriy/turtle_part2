@@ -3,7 +3,7 @@ import turtle as tr
 tr.shape('turtle')
 tr.color('blue', 'black')
 tr.pensize(4)
-tr.speed(10)
+tr.speed(5)
 
 
 def pr_number(ax: list, ay: list, shift: int):
@@ -19,26 +19,29 @@ def pr_number(ax: list, ay: list, shift: int):
 input = open('task_3', 'r')
 ax = []
 ay = []
-for i in range(18):
-#    eval(input.readline())[7:len(stx)-2]
+for i in range(10):
+
     stx = input.readline()
     stx = stx[7:len(stx) - 2]
-    stx = stx.split(', ')
-    sty = input.readline()
-    sty = sty[7:len(sty)-2]
-    sty = sty.split(', ')
-    ax.append(stx)
-    ay.append(sty)
-print(ax)
-#ax = [a0x, a1x, a2x, a3x, a4x, a5x, a6x, a7x, a8x, a9x]
-#ay = [a0y, a1y, a2y, a3y, a4y, a5y, a6y, a7y, a8y, a9y]
+    stx = stx.replace(', ', '')
+    tplx = []
+    for i in range(len(stx)):
+        tplx.append(int(stx[i]))
 
-strx = '0123456789'
+    sty = input.readline()
+    sty = sty[7:len(sty)- 2]
+    sty = sty.replace(', ', '')
+    tply = []
+    for i in range(len(sty)):
+        tply.append(int(sty[i]))
+
+    ax.append(tuple(tplx))
+    ay.append(tuple(tply))
+
+strx = '01234567890'
 x = int(strx)
 k = 0
 for i in range(len(strx)):
     j = x // 10 ** (len(strx) - i - 1)
-    print('i=', i, 'j=', j)
     x = x % 10 ** (len(strx) - i - 1)
-    print(x)
     pr_number(ax[j], ay[j], 2 * i - 10)
