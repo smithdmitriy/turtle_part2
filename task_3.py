@@ -17,14 +17,18 @@ def pr_number(ax: list, ay: list, shift: int):
     tr.goto((ax[0] + shift) * size, ay[0] * size)
 
 input = open('task_3', 'r')
-
 ax = []
 ay = []
 for i in range(18):
+#    eval(input.readline())[7:len(stx)-2]
     stx = input.readline()
+    stx = stx[7:len(stx) - 2]
+    stx = stx.split(', ')
     sty = input.readline()
-    ax.append(stx[7:len(stx)-2])
-    ay.append(sty[7:len(sty)-2])
+    sty = sty[7:len(sty)-2]
+    sty = sty.split(', ')
+    ax.append(stx)
+    ay.append(sty)
 print(ax)
 #ax = [a0x, a1x, a2x, a3x, a4x, a5x, a6x, a7x, a8x, a9x]
 #ay = [a0y, a1y, a2y, a3y, a4y, a5y, a6y, a7y, a8y, a9y]
