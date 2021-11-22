@@ -3,11 +3,11 @@ import turtle as tr
 tr.shape('turtle')
 tr.color('blue', 'black')
 tr.pensize(4)
-tr.speed(1)
+tr.speed(10)
 
 
 def pr_number(ax: list, ay: list, shift: int):
-    size = 40
+    size = 30
     tr.pu()
     tr.goto((ax[1] + shift) * size, ay[1] * size)
     tr.pd()
@@ -25,42 +25,28 @@ a2x = (0, 0, 1, 1, 0, 1)
 a2y = (0, 2, 2, 1, 0, 0)
 a3x = (0, 0, 1, 0, 1, 0)
 a3y = (0, 0, 1, 1, 2, 2)
-a4x = (0, 0, 1, 0, 1, 1)
+a4x = (0, 0, 0, 1, 1, 1)
 a4y = (0, 2, 1, 1, 2, 0)
 a5x = (0, 0, 1, 1, 0, 0, 1)
 a5y = (0, 0, 0, 1, 1, 2, 2)
+a6x = (0, 0, 1, 1, 0, 0, 1)
+a6y = (0, 1, 1, 0, 0, 1, 2)
+a7x = (0, 0, 0, 1, 0)
+a7y = (0, 0, 1, 2, 2)
+a8x = (0, 0, 0, 1, 1, 0, 0, 1)
+a8y = (0, 0, 2, 2, 0, 0, 1, 1)
+a9x = (0, 0, 1, 0, 0, 1, 1)
+a9y = (0, 0, 1, 1, 2, 2, 1)
 
-ax = [a1x, a2x, a3x, a4x, a5x]
-ay = [a1y, a2y, a3y, a4y, a5y]
+ax = [a0x, a1x, a2x, a3x, a4x, a5x, a6x, a7x, a8x, a9x]
+ay = [a0y, a1y, a2y, a3y, a4y, a5y, a6y, a7y, a8y, a9y]
 
-strx = '124'
+strx = '29041989'
 x = int(strx)
 k = 0
-for i in range(len(strx)-1, -1, -1):
-    j = x // 10**(i)
-    x %= 10**(i)
-    print(j)
-    x = int(strx)//10
-    pr_number(ax[j], ay[j], 2*k)
-    k += 1
-
-
-'''
-while i in len(x):
-    prnt(a5x, a5y, 0)
-
-
-
-a6x = [0,
-a6y = [0,
-a7x = [0,
-a7y = [0,
-a8x = [0,
-a8y = [0,
-a9x = [0,
-a9y = [0,
-'''
-
-# prnt(a5x, a5y, 0)
-#pr_number(a1x, a1y, 2)
-# prnt(a3x, a3y, 4)
+for i in range(len(strx)):
+    j = x // 10 ** (len(strx) - i - 1)
+    print('i=', i, 'j=', j)
+    x = x % 10 ** (len(strx) - i - 1)
+    print(x)
+    pr_number(ax[j], ay[j], 2 * i - 10)
