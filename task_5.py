@@ -1,21 +1,40 @@
 from random import randint
 import turtle as tr
 
-
-number_of_turtles = 10
-steps_of_time_number = 100
+tr.tracer(40, 24)
+number_of_turtles = 160
+steps_of_time_number = 10000
+tr.pu()
+tr.speed(0)
+tr.goto(-250, -250)
+tr.pd()
+tr.goto(-250, 250)
+tr.goto(250, 250)
+tr.goto(250, -250)
+tr.goto(-250, -250)
 
 pool = [tr.Turtle(shape='circle') for i in range(number_of_turtles)]
 for unit in pool:
-    unit.turtlesize(1)
+    unit.turtlesize(0.5)
     unit.pu()
-    unit.v = randint(1,12)
+    unit.vx = randint(-4, 4)
+    print(unit.vx)
+    unit.vy = randint(-4, 4)
+    print(unit.vy)
     unit.speed(50)
-    unit.goto(randint(-200, 200), randint(-200, 200))
-    unit.right(randint(0, 360))
-
+    unit.x = randint(-200, 200)
+    unit.y = randint(-200, 200)
+    unit.goto(unit.x, unit.y)
 
 
 for i in range(steps_of_time_number):
     for unit in pool:
-        unit.forward(unit.v)
+        unit.x += unit.vx
+        unit.y += unit.vy
+        unit.goto(unit.x, unit.y)
+        if abs(unit.x) > 250:
+            print(unit.pos())
+            unit.vx *= -1
+        if abs(unit.y) > 250:
+            unit.vy *= -1
+            print(unit.pos())
