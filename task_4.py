@@ -14,12 +14,14 @@ Vx = 3
 Vy = 8
 dt = 0.5
 ay = 0.2
+ax = 0.005
 
 while Vx > 0.1:
     tr.goto(x, y)
     x += Vx * dt
     y += Vy * dt - ay * dt ** 2 / 2
     Vy += -ay * dt
+    Vx += -ax * dt
     print(round(Vx, 2))
     if y < 0:
         Vy = -Vy / 1.4
