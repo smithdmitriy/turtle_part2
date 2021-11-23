@@ -1,8 +1,9 @@
 from random import randint
 import turtle as tr
 
-tr.tracer(40, 24)
-number_of_turtles = 160
+
+number_of_turtles = 100
+tr.tracer(32, 60)
 steps_of_time_number = 10000
 tr.pu()
 tr.speed(0)
