@@ -29,7 +29,7 @@ for unit in pool:
     arx[unit.number] = unit.x
     ary[unit.number] = unit.y
     arvx[unit.number] = unit.vx
-#    arvy[unit.number] = unit.vy
+    arvy[unit.number] = unit.vy
     unit.goto(unit.x, unit.y)
     j += 1
 
@@ -46,9 +46,11 @@ for i in range(steps_of_time_number):
         arvy[unit.number] = unit.vy
 
         for t in range(number_of_turtles):
-            if t != unit.number and ((unit.x - arx[t])**2 + (unit.y - ary[t])**2)**0.5 < r_ball * 2:
-                unit.vx = arvx[t]
-                unit.vy = arvy[t]
+            if t != unit.number and ((unit.x - arx[t])**2 + (unit.y - ary[t])**2)**0.5 <= r_ball * 2:
+                unit.vx, arvx[t] = arvx[t], unit.vx
+                unit.vy, arvy[t] = arvy[t], unit.vy
+
+
 
         if abs(unit.x) > 250 - r_ball:
             unit.vx *= -1
