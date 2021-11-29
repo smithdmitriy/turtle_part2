@@ -4,11 +4,11 @@ import turtle as tr
 number_of_turtles = 3
 delta = 50
 steps_of_time_number = 10000 * 100
-ball_size = 3
+ball_size = 5
 r_ball = ball_size * 10
-dt = 0.1
+dt = 0.01
 
-tr.tracer(20, 60)
+tr.tracer(500, 60)
 arx = [0 for i in range(number_of_turtles)]
 ary = [0 for i in range(number_of_turtles)]
 arvx = [0 for i in range(number_of_turtles)]
@@ -46,11 +46,16 @@ for i in range(steps_of_time_number):
         arvy[unit.number] = unit.vy
 
         for t in range(number_of_turtles):
-            if t != unit.number and ((unit.x - arx[t])**2 + (unit.y - ary[t])**2)**0.5 <= r_ball * 2:
+            if t != unit.number and ((unit.x - arx[t])**2 + (unit.y - ary[t])**2)**0.5 < r_ball * 2:
+                print('boom')
                 unit.vx, arvx[t] = arvx[t], unit.vx
-                unit.vy, arvy[t] = arvy[t], unit.vy
 
-
+                '''
+                V2OY = V2 * OY
+                V1OY = V1 * OY
+                V2OX = V1 * OX
+                V1OX = V2 * OX
+'''
 
         if abs(unit.x) > 250 - r_ball:
             unit.vx *= -1
