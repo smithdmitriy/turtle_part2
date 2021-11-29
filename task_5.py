@@ -1,12 +1,12 @@
 from random import *
 import turtle as tr
 
-number_of_turtles = 3
+number_of_turtles = 30
 delta = 50
 steps_of_time_number = 10000 * 100
-ball_size = 5
+ball_size = 0.5
 r_ball = ball_size * 10
-dt = 0.01
+dt = 0.1
 
 tr.tracer(500, 60)
 arx = [0 for i in range(number_of_turtles)]
@@ -46,9 +46,11 @@ for i in range(steps_of_time_number):
         arvy[unit.number] = unit.vy
 
         for t in range(number_of_turtles):
-            if t != unit.number and ((unit.x - arx[t])**2 + (unit.y - ary[t])**2)**0.5 < r_ball * 2:
+            if t != unit.number and ((unit.x + unit.vx - arx[t]- arvx[t])**2 + (unit.y + unit.vy - ary[t]-arvy[t])**2)**0.5 < r_ball * 2:
                 print('boom')
+
                 unit.vx, arvx[t] = arvx[t], unit.vx
+                unit.vy, arvy[t] = arvy[t], unit.vy
 
                 '''
                 V2OY = V2 * OY
