@@ -15,7 +15,6 @@ radius_ball = []
 mass_ball = []
 x_coord_ball = []
 y_coord_ball = []
-direction_ball = []
 speed_ball = []
 speed_angle = []
 color_ball = []
@@ -51,12 +50,10 @@ while running:
 
         # верхняя стена
         if y_coord_ball[i] - radius_ball[i] < 0 and math.sin(speed_angle[i]) < 0:
-            print('boom')
             speed_angle[i] = (-speed_angle[i]) % (2 * (PI))
 
         # нижняя стена
         if y_coord_ball[i] + radius_ball[i] > height and math.sin(speed_angle[i]) > 0:
-            print('boom')
             speed_angle[i] = (-speed_angle[i]) % (2 * (PI))
 
         pygame.draw.circle(balls_window, color_ball[i], (x_coord_ball[i], y_coord_ball[i]), radius_ball[i])
