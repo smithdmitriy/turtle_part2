@@ -19,7 +19,7 @@ def ball_distance(x1: float, y1: float, x2: float, y2: float):
 
 pygame.init()
 width = 1500  # Ширина поля
-height = 500  # Высота поля
+height = 1300  # Высота поля
 balls_window = pygame.display.set_mode((width, height))
 pygame.display.set_caption('Balls')
 PI = math.pi
@@ -79,6 +79,51 @@ while running:
         if speed_angle[i] > PI:
             speed_angle[i] -= 2 * PI
 
+
+    # Обработка магнитного взаимодействия шаров
+    for i in range(1, number_balls + 1):
+        for j in range(i + 1, number_balls + 1):  # j - другие шары
+            bd = ball_distance(x_coord_ball[i],
+                             y_coord_ball[i],
+                             x_coord_ball[j],
+                             y_coord_ball[j])
+            if bd <= 4 * (radius_ball[i] + radius_ball[j]):
+                f_mag = 0.01 * mass_ball[i] * mass_ball[j] * bd ** 2
+
+                delta_speed = 0
+
+                bb = (math.atan((y_coord_ball[j] - y_coord_ball[i]) / (x_coord_ball[j] - x_coord_ball[i]))) % PI
+                if not - PI / 2 < bb < PI / 2:
+                    bb -= PI
+                # Угол луча между центрами шаров до направления движения
+                w1 = speed_angle[i] - bb
+                w2 = speed_angle[j] - bb
+
+                vwt1 = (speed_ball[i]) * math.sin(w1)
+
+                vwt2 = (speed_ball[j]) * math.sin(w2)
+
+                vw1 = (2 * mass_ball[j] * speed_ball[j] * math.cos(w2) +
+                       (mass_ball[i] - mass_ball[j]) * speed_ball[i] * math.cos(w1)) / (mass_ball[i] + mass_ball[j])
+
+                vw2 = (2 * mass_ball[i] * speed_ball[i] * math.cos(w1) +
+                       (mass_ball[j] - mass_ball[i]) * speed_ball[j] * math.cos(w2)) / (mass_ball[j] + mass_ball[i])
+
+                w1 = math.atan(vwt1 / vw1)
+                if vw1 < 0:
+                    w1 += PI
+                w2 = math.atan(vwt2 / vw2)
+                if vw2 < 0:
+                    w2 += PI
+
+#                speed_ball[i] = (vw1 ** 2 + vwt1 ** 2) ** 0.5
+#                speed_ball[j] = (vw2 ** 2 + vwt2 ** 2) ** 0.5
+#
+#                speed_angle[i] = bb + w1
+#                speed_angle[j] = bb + w2
+
+
+
     # Обработка столкновения шаров между собой
     for i in range(1, number_balls + 1):
         for j in range(i + 1, number_balls + 1):  # j - другие шары
@@ -98,7 +143,6 @@ while running:
                 bb = (math.atan((y_coord_ball[j] - y_coord_ball[i]) / (x_coord_ball[j] - x_coord_ball[i]))) % PI
                 if not - PI / 2 < bb < PI / 2:
                     bb -= PI
-                print(bb * 180 / PI)
                 # Угол луча между центрами шаров до направления движения
                 w1 = speed_angle[i] - bb
                 w2 = speed_angle[j] - bb
@@ -127,6 +171,8 @@ while running:
                 speed_angle[j] = bb + w2
 
         pygame.draw.circle(balls_window, color_ball[i], (x_coord_ball[i], y_coord_ball[i]), radius_ball[i])
+
+
 
     pygame.time.delay(1)
 
