@@ -18,13 +18,13 @@ def ball_distance(x1: float, y1: float, x2: float, y2: float):
 
 
 pygame.init()
-width = 1500  # Ширина поля
+width = 500  # Ширина поля
 height = 500  # Высота поля
 balls_window = pygame.display.set_mode((width, height))
 pygame.display.set_caption('Balls')
 PI = math.pi
 
-number_balls = 20  # Количество шаров
+number_balls = 2  # Количество шаров
 radius_ball = []
 mass_ball = []
 x_coord_ball = []
@@ -127,6 +127,50 @@ while running:
                 speed_angle[j] = bb + w2
 
         pygame.draw.circle(balls_window, color_ball[i], (x_coord_ball[i], y_coord_ball[i]), radius_ball[i])
+
+    # обработка магнитного взаимодействия шаров
+    for i in range(1, number_balls + 1):
+        for j in range(i + 1, number_balls + 1):
+            distance = ball_distance(
+                x_coord_ball[i],
+                y_coord_ball[i],
+                x_coord_ball[j],
+                y_coord_ball[j])
+            if distance <= 4 * (radius_ball[i]+radius_ball[j]):
+                f_mag = mass_ball[i] * mass_ball[j] / distance**2 * 0.000000001
+                bb = (math.atan((y_coord_ball[j] - y_coord_ball[i]) / (x_coord_ball[j] - x_coord_ball[i]))) % PI
+                if not - PI / 2 < bb < PI / 2:
+                    bb -= PI
+                # Угол луча между центрами шаров до направления движения
+                w1 = speed_angle[i] - bb
+                w2 = speed_angle[j] - bb
+
+                vwt1 = speed_ball[i] * math.sin(w1)
+
+                vwt2 = speed_ball[j] * math.sin(w2)
+
+                vw1 = f_mag + math.cos(w2)
+
+                vw2 = f_mag + math.cos(w1)
+
+                w1 = math.atan(vwt1 / vw1)
+                if vw1 < 0:
+                    w1 += PI
+                w2 = math.atan(vwt2 / vw2)
+                if vw2 < 0:
+                    w2 += PI
+
+                #speed_ball[i] = (vw1 ** 2 + vwt1 ** 2) ** 0.5
+                #speed_ball[j] = (vw2 ** 2 + vwt2 ** 2) ** 0.5
+
+                speed_ball[i] -= f_mag
+                speed_ball[j] -= f_mag
+
+                #speed_angle[i] = bb + w1*f_mag
+                #speed_angle[j] = bb + w2*f_mag
+
+                print(f'{f_mag=} {vwt1 =} {vw1=} {speed_ball[i] =} {speed_angle[i] = }')
+
 
     pygame.time.delay(1)
 
